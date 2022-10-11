@@ -3,6 +3,7 @@ package ausy.pt.api.services.impl;
 import ausy.pt.api.domain.User;
 import ausy.pt.api.repositories.UserRepository;
 import ausy.pt.api.services.UserService;
+import ausy.pt.api.services.exceptions.ObjectNotFoundException;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ public class UserServiceImpl  implements UserService {
     @Override
     public User findById(Integer id) {
         Optional<User> obj = repository.findById(id);
-        return obj.orElse(null);
+        return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 
     }
 }
