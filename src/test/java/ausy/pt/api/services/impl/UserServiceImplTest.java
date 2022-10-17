@@ -3,6 +3,7 @@ package ausy.pt.api.services.impl;
 import ausy.pt.api.domain.User;
 import ausy.pt.api.domain.dto.UserDTO;
 import ausy.pt.api.repositories.UserRepository;
+import ausy.pt.api.services.exceptions.ObjectNotFoundException;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -56,6 +57,18 @@ class UserServiceImplTest {
         assertEquals(ID, response.getId());
         assertEquals(NAME, response.getName());
         assertEquals(EMAIL, response.getEmail());
+    }
+
+    @Test
+    void whenFindByIdThenReturnAndObjectNotFoundException(){
+        when(repository.findById(anyInt())).thenThrow(new ObjectNotFoundException("Objeto não encontrado"));
+
+        try{
+            service.findById(ID);
+        } catch (Exception ex) {
+           assertEquals(ObjectNotFoundException.class, ex.getClass());
+           assertEquals("Objeto não encontrado", ex.getMessage());
+        }
     }
 
     @Test
