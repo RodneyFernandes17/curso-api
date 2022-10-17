@@ -4,6 +4,7 @@ import ausy.pt.api.domain.User;
 import ausy.pt.api.domain.dto.UserDTO;
 import ausy.pt.api.repositories.UserRepository;
 import ausy.pt.api.services.exceptions.ObjectNotFoundException;
+import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,6 +22,7 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 class UserServiceImplTest {
 
+    public static final int INDEX = 0;
     private static final Integer ID = 1;
     private static final String NAME = "Rods";
     private static final String EMAIL = "rod@mail.com";
@@ -73,7 +75,18 @@ class UserServiceImplTest {
     }
 
     @Test
-    void findAll() {
+    void whenFindAllThenReturnAnListOfUsers() {
+         when(repository.findAll()).thenReturn(List.of(user)); //foi mocado uma lista com apenas 1 usuario
+         List<User> response = service.findAll();
+         assertNotNull(response);
+         assertEquals(1, response.size());
+         assertEquals(User.class, response.get(INDEX).getClass());
+
+         assertEquals(ID,response.get(INDEX).getId());
+         assertEquals(NAME,response.get(INDEX).getName());
+         assertEquals(EMAIL,response.get(INDEX).getEmail());
+         assertEquals(PASSWORD,response.get(INDEX).getPassword());
+
     }
 
     @Test
