@@ -33,9 +33,9 @@ class UserResourceTest {
     private static final String EMAIL = "rod@mail.com";
     private static final String PASSWORD = "123";
 
-    private User user;
+    private User user = new User();
 
-    private UserDTO userDTO;
+    private UserDTO userDTO = new UserDTO();
 
     @InjectMocks
     private UserResource resource;
